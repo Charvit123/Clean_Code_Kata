@@ -43,19 +43,17 @@ public class PrimeGenerator {
   }
 
   private boolean isCurrentOddPrime() {
-    boolean isPrime;
     number = 2;
-    isPrime = true;
-    while (number < primeOrder && isPrime) {
+    while (number < primeOrder) {
       while (primeMultiples[number] < currentOddNumber) {
-        primeMultiples[number] += primes[number] + primes[number];
+        primeMultiples[number] += 2 * primes[number];
       }
       if (primeMultiples[number] == currentOddNumber) {
-        isPrime = false;
+        return false;
       }
       number++;
     }
-    return isPrime;
+    return true;
   }
 
   private void checkForNewPrimeOrder() {
