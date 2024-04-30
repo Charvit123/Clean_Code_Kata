@@ -1,7 +1,7 @@
 package com.cleancode.knuth;
 
 public class PrimeGenerator {
-  public void generate() {
+  public int[] generate() {
 
     final int numberOfPrimes = 1000;
     int[] primes = new int[numberOfPrimes + 1];
@@ -35,6 +35,10 @@ public class PrimeGenerator {
       primeIndex++;
       primes[primeIndex] = currentOddNumber;
     }
+    return primes;
+  }
+
+  public void printNumbers(int numberOfPrimes, int[] primes) {
     int pagenumber = 1;
     int pageoffset = 1;
     final int colsPerPage = 4;
