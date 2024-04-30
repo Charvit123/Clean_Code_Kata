@@ -2,49 +2,67 @@ package com.cleancode.knuth;
 
 public class PrimeGenerator {
 
-  final int maxPrimeOrder = 30;
-  boolean isPrime;
+  private final int MAX_PRIME_ORDER = 30;
   int[] primes;
-  int[] primeMultiples = new int[maxPrimeOrder + 1];
-  int primeOrder;
-  int primeIndex;
+  int[] primeMultiples;
+
   int number;
   int currentOddNumber;
-  int square;
+  int primeOrder;
+  int primeIndex;
+  int squareOfNextPrime;
 
   public int[] generate(int numberOfPrimes) {
-    number = 0;
-    currentOddNumber = 1;
-    primeIndex = 1;
-    primeOrder = 2;
+    primeMultiples = new int[MAX_PRIME_ORDER + 1];
+    initializeStates();
     primes = new int[numberOfPrimes + 1];
     primes[1] = 2;
-    square = 9;
     while (primeIndex < numberOfPrimes) {
-      square = findNextPrime();
+      findNextPrime();
       primeIndex++;
       primes[primeIndex] = currentOddNumber;
     }
     return primes;
   }
 
-  private int findNextPrime() {
+  private void initializeStates() {
+    number = 0;
+    currentOddNumber = 1;
+    primeIndex = 1;
+    primeOrder = 2;
+    squareOfNextPrime = 9;
+  }
+
+  private void findNextPrime() {
+    boolean isPrime;
     do {
       currentOddNumber += 2;
-      if (currentOddNumber == square) {
-        primeOrder++;
-        square = primes[primeOrder] * primes[primeOrder];
-        primeMultiples[primeOrder - 1] = currentOddNumber;
-      }
-      number = 2;
-      isPrime = true;
-      while (number < primeOrder && isPrime) {
-        while (primeMultiples[number] < currentOddNumber)
-          primeMultiples[number] += primes[number] + primes[number];
-        if (primeMultiples[number] == currentOddNumber) isPrime = false;
-        number++;
-      }
+      checkForNewPrimeOrder();
+      isPrime = isCurrentOddPrime();
     } while (!isPrime);
-    return square;
+  }
+
+  private boolean isCurrentOddPrime() {
+    boolean isPrime;
+    number = 2;
+    isPrime = true;
+    while (number < primeOrder && isPrime) {
+      while (primeMultiples[number] < currentOddNumber) {
+        primeMultiples[number] += primes[number] + primes[number];
+      }
+      if (primeMultiples[number] == currentOddNumber) {
+        isPrime = false;
+      }
+      number++;
+    }
+    return isPrime;
+  }
+
+  private void checkForNewPrimeOrder() {
+    if (currentOddNumber == squareOfNextPrime) {
+      primeOrder++;
+      squareOfNextPrime = primes[primeOrder] * primes[primeOrder];
+      primeMultiples[primeOrder - 1] = currentOddNumber;
+    }
   }
 }
