@@ -2,7 +2,7 @@ package com.cleancode.knuth;
 
 public class PrimeGenerator {
 
-  private final int MAX_PRIME_ORDER = 30;
+  private static final int MAX_PRIME_ORDER = 30;
   int[] primes;
   int[] primeMultiples;
 
@@ -13,6 +13,9 @@ public class PrimeGenerator {
   int squareOfNextPrime;
 
   public int[] generate(int numberOfPrimes) {
+    if (numberOfPrimes < 0) {
+      throw new IllegalArgumentException("Number is not valid");
+    }
     primeMultiples = new int[MAX_PRIME_ORDER + 1];
     initializeStates();
     primes = new int[numberOfPrimes + 1];

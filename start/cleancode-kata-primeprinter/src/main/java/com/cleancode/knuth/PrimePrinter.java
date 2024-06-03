@@ -6,6 +6,6 @@ public class PrimePrinter {
     PrimeGenerator primeGenerator = new PrimeGenerator();
     int[] primes = primeGenerator.generate(numberOfPrimes);
     NumberPrinter numberPrinter = new NumberPrinter();
-    numberPrinter.printNumbers(numberOfPrimes, primes);
+    numberPrinter.printNumbers(numberOfPrimes, primes,50,4);
   }
 }
